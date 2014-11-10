@@ -7,41 +7,52 @@
 
 $(function() {
 
-var dataObj = { 
-  items: [
-    {Country_Code: "BY", Country_Name: "Belarus", Population: 9685000, "English?": false},
-    {Country_Code: "BZ", Country_Name: "Belize", Population: 314522, "English?": true},
-    {Country_Code: "CA", Country_Name: "Canada", Population: 33679000, "English?": true},
-    {Country_Code: "CC", Country_Name: "Cocos [Keeling] Islands", Population: 628, "English?": true},
-    {Country_Code: "CD", Country_Name: "Democratic Republic of the Congo", Population: 70916439, "English?": false},
-    {Country_Code: "CF", Country_Name: "Central African Republic", Population: 4844927, "English?": false},
-    {Country_Code: "CG", Country_Name: "Republic of the Congo", Population: 3039126, "English?": false},
-    {Country_Code: "CH", Country_Name: "Switzerland", Population: 7581000, "English?": false},
-  ]
-}
+  var dataObj = { 
+    items: [
+      {Country_Code: "BY", Country_Name: "Belarus", Population: 9685000, English: false},
+      {Country_Code: "BZ", Country_Name: "Belize", Population: 314522, English: true},
+      {Country_Code: "CA", Country_Name: "Canada", Population: 33679000, English: true},
+      {Country_Code: "CC", Country_Name: "Cocos [Keeling] Islands", Population: 628, English: true},
+      {Country_Code: "CD", Country_Name: "Democratic Republic of the Congo", Population: 70916439, English: false},
+      {Country_Code: "CF", Country_Name: "Central African Republic", Population: 4844927, English: false},
+      {Country_Code: "CG", Country_Name: "Republic of the Congo", Population: 3039126, English: false},
+      {Country_Code: "CH", Country_Name: "Switzerland", Population: 7581000, English: false},
+    ]
+  }
 
-var source   = $("#country-template").html();
-var template = Handlebars.compile(source);
+  var source   = $("#country-template").html();
+  var template = Handlebars.compile(source);
 
 
-var refreshCountries = function(context) {
-  // go through each Population key and format the number to have commas
-  context.items.forEach(function(country) {
-    country.Population = accounting.formatNumber(country.Population);
+  var refreshCountries = function(context) {
+    var html = template(context);
+    $("#country-info").html(html);
+  };
+
+// formats the population numbers to have commas
+  Handlebars.registerHelper("formatNumber", function(population) {
+    return accounting.formatNumber(population);
   });
 
-  var html = template(context);
-  $("#country-info").html(html);
-};
+// Turn booleans into check marks
+  Handlebars.registerHelper('checkMark', function(english) {
+    if (english === true)
+      return new Handlebars.SafeString("<i class='fa fa-check'></i>");
+    return "";
+  });
 
-Handlebars.registerHelper('if', function(conditional, options) {
-  if (conditional) {
+// Chooses the class to change the rows the appropriate color based on poopulation
+  Handlebars.registerHelper('color', function(population) {
+    if (population > 5000000)
+      return "highPop";
+    else if (population > 100000)
+      return "lowPop";
+    else
+      return "realLowPop";
+  });
 
-  }
-});
 
-
-refreshCountries(dataObj);
+  refreshCountries(dataObj);
 
 });
 
