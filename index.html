@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title> Samer Challenge 1 </title>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+  <div id="country-info"></div>
+
+  <div>
+    <span class="lowPop">Population > 100,000</span><br>
+    <span class="highPop">Population > 5,000,000</span>
+  </div>
+
+  <script id="country-template" type="text/x-handlebars-template">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          {{#each items}}
+          <th> {{Country_Code.key}} </th>
+          {{/each}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+          <tr>
+            <td> {{Country_Code}} </td>
+            <td> {{Country_Name}} </td>
+            <td> {{Population}} </td>
+            <td> 
+              {{#if English?}}
+                <i class="fa fa-check"></i>
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </script>
+  
+  <script src="accounting.js-master/accounting.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+  <script src="samerChallenge.js"></script>
+</body>
+</html>
